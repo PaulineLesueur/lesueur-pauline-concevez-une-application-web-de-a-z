@@ -12,6 +12,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/")
+    public String homePage(Model model) { return "home"; }
+
     @GetMapping("/login")
     public String loginPage(Model model) {
         return "login";
