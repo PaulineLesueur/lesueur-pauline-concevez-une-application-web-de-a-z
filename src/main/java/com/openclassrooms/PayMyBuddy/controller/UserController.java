@@ -12,7 +12,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String homePage(Model model) { return "home"; }
 
     @GetMapping("/login")

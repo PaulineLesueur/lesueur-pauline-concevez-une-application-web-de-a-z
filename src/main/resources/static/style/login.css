@@ -77,7 +77,7 @@ input {
     text-align: center;
 }
 
-button.primary {
+input.button.primary {
     width: 150px;
     height: 40px;
     margin: auto;

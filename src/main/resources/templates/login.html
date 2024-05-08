@@ -13,7 +13,9 @@
     <div class="container-login">
         <h1>Pay My Buddy</h1>
 
-        <form>
+        <div th:if="${param.error}">Error</div>
+
+        <form name="login" th:action="@{/login}" method="POST">
             <div class="input email">
                 <label for="email"></label>
                 <input name="email" type="text" id="email" placeholder="Email" />
@@ -25,7 +27,7 @@
             <div class="gensmall remember"><input type="checkbox"> Remember me</div>
 
             <div class="bottom">
-                <button class="primary">Login</button>
+                <input type="submit" class="button primary" value="Log in" />
                 <div class="gensmall">Not registered ? <a href="">Create an account</a></div>
             </div>
         </form>
