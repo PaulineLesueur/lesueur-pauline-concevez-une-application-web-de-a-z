@@ -1,12 +1,13 @@
 package com.openclassrooms.PayMyBuddy.repository;
 
 import com.openclassrooms.PayMyBuddy.model.DBUser;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface DBUserRepository extends CrudRepository<DBUser, Integer> {
+public interface DBUserRepository extends JpaRepository<DBUser, Integer> {
+    public DBUser findByUsername(String username);
 
 }
