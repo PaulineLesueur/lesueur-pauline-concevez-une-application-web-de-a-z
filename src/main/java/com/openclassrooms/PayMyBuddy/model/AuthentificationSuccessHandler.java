@@ -11,7 +11,7 @@ import java.io.IOException;
 public class AuthentificationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
-        setDefaultTargetUrl("/home");
+        setDefaultTargetUrl("/home/transfer");
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }

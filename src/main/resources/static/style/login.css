@@ -4,6 +4,10 @@ body {
     justify-content: center;
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
 .container-login {
     position: relative;
     width: 415px;
@@ -78,7 +82,7 @@ input {
 }
 
 input.button.primary {
-    width: 150px;
     height: 40px;
     margin: auto;
+    font-size: 16px;
 }

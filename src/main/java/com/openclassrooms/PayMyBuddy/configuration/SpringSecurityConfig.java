@@ -23,7 +23,7 @@ public class SpringSecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/style/**").permitAll();
-                    auth.requestMatchers("/home").hasRole("USER");
+                    auth.requestMatchers("/home/transfer").hasRole("USER");
                     auth.anyRequest().authenticated();
                 })
                 .formLogin(httpSecurityFormLoginConfigurer -> {

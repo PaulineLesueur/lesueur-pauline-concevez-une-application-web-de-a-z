@@ -11,9 +11,9 @@ public class UserController {
     @Autowired
     private DBUserService userService;
 
-    @GetMapping("/home")
+    @GetMapping("/home/transfer")
     public String homePage() {
-        return "home";
+        return "transfer";
     }
 
     @GetMapping("/login")
