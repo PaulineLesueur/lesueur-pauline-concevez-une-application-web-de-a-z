@@ -11,11 +11,6 @@ public class UserController {
     @Autowired
     private DBUserService userService;
 
-    @GetMapping("/home/transfer")
-    public String homePage() {
-        return "transfer";
-    }
-
     @GetMapping("/login")
     public String loginPage() {
         return "login";

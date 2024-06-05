@@ -13,7 +13,7 @@ public class ConnectionController {
 
     private static DBUser currentUser = new DBUser(3L, "currentuser@gmail.com", "dehjfv", "USER", null);
 
-    @GetMapping("/connectionList")
+    @GetMapping("/home/transfer")
     public String getConnectionList(Model model) {
         List<DBUser> connectionList = new ArrayList<>();
         DBUser user1 = new DBUser(1L, "test1@email.com", "cndjknzjk", "USER", null);
@@ -21,7 +21,7 @@ public class ConnectionController {
         connectionList.add(user1);
         connectionList.add(user2);
         currentUser.setConnections(connectionList);
-        model.addAttribute("connections", connectionList);
+        model.addAttribute("connections", currentUser.getConnections());
         return "transfer";
     }
 

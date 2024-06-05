@@ -36,10 +36,13 @@
                     <label for="select_a_connection"></label>
                     <select name="connections" id="select_a_connection">
                         <option selected>Select a Connection</option>
-                        <option th:each="connection : ${connections}"
-                                th:value="${connection.id}"
-                                th:text="${connection.username}">...</option>
+                        <option th:each="user : ${connections}"
+                                th:value="${user.getId}"
+                                th:text="${user.username}"></option>
                     </select>
+
+                    <!--<div th:text="${connections}">Connections will be displayed here.</div>-->
+
                     <label for="amount"></label>
                     <input type="number" placeholder="0€ " name="amount" id="amount" />
                     <input type="button" class="button" value="Pay" />
