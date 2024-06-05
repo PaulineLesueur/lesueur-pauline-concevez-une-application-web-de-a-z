@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface DBUserRepository extends JpaRepository<DBUser, Integer> {
+public interface DBUserRepository extends JpaRepository<DBUser, Long> {
     public DBUser findByUsername(String username);
 
 }
