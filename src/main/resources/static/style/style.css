@@ -48,7 +48,13 @@ input, select {
     font-family: 'Inter';
 }
 
-input.button {
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input.button, .button {
     cursor: pointer;
     width: 150px;
     border: none !important;
@@ -58,12 +64,12 @@ input.button {
     color: white;
 }
 
-input.button {
+input.button, .button {
     background: #5cb95c;
     height: 30px;
 }
 
-input.button.primary {
+input.button.primary, .button.primary {
     background: #0275d8;
 }
 
@@ -86,6 +92,10 @@ header .container {
 nav {
     display: flex;
     gap: 20px;
+}
+
+nav a {
+    color: #171717;
 }
 
 nav li, nav input {
@@ -132,5 +142,6 @@ section .head {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    height: 35px;
     padding-bottom: 5px;
 }

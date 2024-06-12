@@ -18,8 +18,6 @@ public class ConnectionController {
     @Autowired
     private DBUserService dbUserService;
 
-    //private static List<DBUser> connectionList = new ArrayList<>();
-
     @GetMapping("/home/transfer")
     public String getConnectionList(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         String loggedInUsername = userDetails.getUsername();
@@ -40,5 +38,8 @@ public class ConnectionController {
         model.addAttribute("connections", currentUser.getConnections());
         return "transfer";
     }
+
+    @GetMapping("/home/transfer/addConnection")
+    public String addConnection() { return "addConnection"; }
 
 }

@@ -1,4 +1,8 @@
-#send_money .body {
+nav a {
+    color: #0275d8;
+}
+
+#send_money .body, #add_connection .body {
     display: flex;
     gap: 25px;
     justify-content: center;
@@ -7,15 +11,27 @@
     background: #f5f5f5;
 }
 
+#add_connection .body form {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
 #send_money .body label {
     display: none;
 }
 
-#send_money .body input, #send_money .body select {
+#send_money .body input, #send_money .body select, #add_connection .body input {
     height: 30px;
     border: 1px solid #afafaf;
     font-family: 'Inter';
     font-size: 12px;
+}
+
+#add_connection .body input.email {
+    width: 300px;
+    padding-left: 4px;
 }
 
 #send_money .body select {

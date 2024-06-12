@@ -11,10 +11,10 @@
 <body>
     <header>
         <div class="container">
-            <a th:href="@{transfer}"><h1>Pay My Buddy</h1></a>
+            <a th:href="@{/home/transfer}"><h1>Pay My Buddy</h1></a>
             <nav>
                 <li>Home</li>
-                <li><a th:href="@{transfer}">Transfer</a></li>
+                <li><a th:href="@{/home/transfer}">Transfer</a></li>
                 <li>Profile</li>
                 <li>Contact</li>
                 <li>
@@ -34,7 +34,7 @@
         <div class="container">
             <section id="send_money">
                 <div class="head">
-                    <h2>Send Money</h2> <input class="button primary" type="button" value="Add Connection" />
+                    <h2>Send Money</h2> <a class="button primary" th:href="@{transfer/addConnection}">Add Connection</a>
                 </div>
                 <div class="body">
                     <label for="select_a_connection"></label>

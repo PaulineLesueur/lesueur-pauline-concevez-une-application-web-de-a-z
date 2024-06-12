@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pay My Buddy - Add new connection</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/style/style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/transfer.css}" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a th:href="@{/home/transfer}"><h1>Pay My Buddy</h1></a>
+            <nav>
+                <li>Home</li>
+                <li><a th:href="@{/home/transfer}">Transfer</a></li>
+                <li>Profile</li>
+                <li>Contact</li>
+                <li>
+                    <form name="logout" th:action="@{/logout}" method="POST">
+                        <input type="submit" value="Log out" />
+                    </form>
+                </li>
+            </nav>
+        </div>
+    </header>
+    <section id="path">
+        <div class="container">
+            <a th:href="@{/home/transfer}">Home</a> <a th:href="@{/home/transfer}">Transfer</a> Add Connection
+        </div>
+    </section>
+    <main>
+        <div class="container">
+            <section id="add_connection">
+                <div class="head">
+                    <h2>Add connection</h2>
+                </div>
+                <div class="body">
+                    <form name="add_connection" method="POST">
+                        <input class="email" type="email" placeholder="name@email.com" />
+                        <input class="button" type="button" value="Add Connection" />
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
