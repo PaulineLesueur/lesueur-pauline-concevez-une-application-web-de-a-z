@@ -17,7 +17,11 @@
                 <li><a th:href="@{transfer}">Transfer</a></li>
                 <li>Profile</li>
                 <li>Contact</li>
-                <li>Log off</li>
+                <li>
+                    <form name="logout" th:action="@{/logout}" method="POST">
+                        <input type="submit" value="Log out" />
+                    </form>
+                </li>
             </nav>
         </div>
     </header>
@@ -44,7 +48,7 @@
                     <!--<div th:text="${connections}">Connections will be displayed here.</div>-->
 
                     <label for="amount"></label>
-                    <input type="number" placeholder="0€ " name="amount" id="amount" />
+                    <input type="number" min="0" placeholder="0€ " name="amount" id="amount" />
                     <input type="button" class="button" value="Pay" />
                 </div>
             </section>

@@ -28,6 +28,11 @@ public class DBUser {
     private String role;
 
     @ManyToMany
+    @JoinTable(
+            name = "connection",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "connection_id")
+    )
     private List<DBUser> connections = new ArrayList<>();
 
 }

@@ -88,9 +88,18 @@ nav {
     gap: 20px;
 }
 
-nav li {
+nav li, nav input {
     cursor: pointer;
     font-weight: 500;
+    font-family: 'Inter';
+    font-size: 16px;
+    color: #171717;
+}
+
+nav input {
+    background: none;
+    border: none;
+
 }
 
 #path {

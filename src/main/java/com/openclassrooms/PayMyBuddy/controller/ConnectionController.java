@@ -15,20 +15,29 @@ import java.util.List;
 @Controller
 public class ConnectionController {
 
-    /*private static DBUser currentUser = new DBUser(3L, "currentuser@gmail.com", "dehjfv", "USER", null);*/
-
     @Autowired
     private DBUserService dbUserService;
 
-    private static List<DBUser> connectionList = new ArrayList<>();
+    //private static List<DBUser> connectionList = new ArrayList<>();
 
     @GetMapping("/home/transfer")
     public String getConnectionList(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        String loggedInUser = userDetails.getUsername();
-        Long userId = dbUserService.getUserByUsername(loggedInUser).getId();
+        String loggedInUsername = userDetails.getUsername();
+        DBUser currentUser = dbUserService.getUserByUsername(loggedInUsername);
+        Long userId = dbUserService.getUserByUsername(loggedInUsername).getId();
 
-        connectionList.addAll(dbUserService.getConnectionsOfUserById(userId));
-        model.addAttribute("connections", connectionList);
+        List<DBUser> userConnections = currentUser.getConnections();
+        List<DBUser> connectionList = dbUserService.getConnectionsOfUserById(userId);
+
+        for(DBUser connection : connectionList) {
+            if(!userConnections.contains(connection)) {
+                userConnections.add(connection);
+            }
+        }
+
+        currentUser.setConnections(userConnections);
+
+        model.addAttribute("connections", currentUser.getConnections());
         return "transfer";
     }
 

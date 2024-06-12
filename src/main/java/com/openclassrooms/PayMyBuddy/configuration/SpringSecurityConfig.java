@@ -8,8 +8,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -31,6 +36,13 @@ public class SpringSecurityConfig {
                             .loginPage(("/login"))
                             .successHandler(new AuthentificationSuccessHandler())
                             .permitAll();
+                })
+                .logout(logoutConfigurer -> {
+                    logoutConfigurer
+                            .logoutUrl("/logout")
+                            .logoutSuccessUrl("/login")
+                            .invalidateHttpSession(true)
+                            .deleteCookies("JSESSIONID");
                 })
                 .build();
     }
