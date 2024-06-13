@@ -1,0 +1,16 @@
+.new-account h2 {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.new-account form {
+    row-gap: 22px;
+}
+
+.error.form {
+    position: absolute;
+    display: block;
+    margin-top: 5px;
+    font-size: 11px;
+    color: #db7070;
+}
