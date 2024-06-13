@@ -21,4 +21,8 @@ public class DBUserService {
         return dbUserRepository.findConnectionsByUserId(userId);
     }
 
+    public void saveUser(DBUser user) {
+        dbUserRepository.save(user);
+    }
+
 }

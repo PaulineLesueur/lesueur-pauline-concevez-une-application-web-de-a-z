@@ -29,7 +29,7 @@ nav a {
     font-size: 12px;
 }
 
-#add_connection .body input.email {
+#send_money .body input.description, #add_connection .body input.email {
     width: 300px;
     padding-left: 4px;
 }

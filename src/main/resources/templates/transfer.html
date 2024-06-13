@@ -45,7 +45,8 @@
                                 th:text="${user.username}"></option>
                     </select>
 
-                    <!--<div th:text="${connections}">Connections will be displayed here.</div>-->
+                    <label for="description"></label>
+                    <input class="description" type="text" name="description" id="description" placeholder="Description..." />
 
                     <label for="amount"></label>
                     <input type="number" min="0" placeholder="0€ " name="amount" id="amount" />

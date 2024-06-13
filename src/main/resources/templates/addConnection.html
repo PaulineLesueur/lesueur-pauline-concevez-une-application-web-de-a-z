@@ -14,7 +14,7 @@
             <a th:href="@{/home/transfer}"><h1>Pay My Buddy</h1></a>
             <nav>
                 <li>Home</li>
-                <li><a th:href="@{/home/transfer}">Transfer</a></li>
+                <li>Transfer</li>
                 <li>Profile</li>
                 <li>Contact</li>
                 <li>
@@ -37,9 +37,9 @@
                     <h2>Add connection</h2>
                 </div>
                 <div class="body">
-                    <form name="add_connection" method="POST">
-                        <input class="email" type="email" placeholder="name@email.com" />
-                        <input class="button" type="button" value="Add Connection" />
+                    <form name="add_connection" th:action="@{/addConnection}" method="POST">
+                        <input name="email" class="email" type="email" placeholder="name@email.com" required />
+                        <input class="button" type="submit" value="Add Connection" />
                     </form>
                 </div>
             </section>
