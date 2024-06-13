@@ -45,6 +45,7 @@ public class ConnectionController {
         currentUser.setConnections(userConnections);
 
         model.addAttribute("connections", currentUser.getConnections());
+        model.addAttribute("user", currentUser);
         return "transfer";
     }
 
@@ -52,25 +53,24 @@ public class ConnectionController {
     public String addConnectionPage() { return "addConnection"; }
 
     @PostMapping("/addConnection")
-    public String addConnection(Model model, @AuthenticationPrincipal UserDetails userDetails, @RequestParam String email) {
-        //je veux ajouter à la liste de connections de currentUser l'utilisateur correspondant à l'email renseigné dans le formulaire
+    public String addConnection(Model model, @AuthenticationPrincipal UserDetails userDetails, @RequestParam String email, RedirectAttributes redirectAttributes) {
         String loggedInUsername = userDetails.getUsername();
         DBUser currentUser = dbUserService.getUserByUsername(loggedInUsername);
         List<DBUser> userConnections = currentUser.getConnections();
 
         DBUser connectionToAdd = dbUserService.getUserByUsername(email);
         if(connectionToAdd == null) {
-            model.addAttribute("errorMessage", "User not found");
+            redirectAttributes.addFlashAttribute("errorMessage", "User not found");
             return "redirect:/home/transfer/addConnection";
         } else if(userConnections.contains(connectionToAdd)) {
-            model.addAttribute("errorMessage", "This user is already in you connections list");
+            redirectAttributes.addFlashAttribute("errorMessage", "You're already connected with this user");
             return "redirect:/home/transfer/addConnection";
 
         } else if(!userConnections.contains(connectionToAdd)) {
             userConnections.add(connectionToAdd);
             currentUser.setConnections(userConnections);
             dbUserService.saveUser(currentUser);
-            model.addAttribute("successMessage", "Connection added successfully !");
+            redirectAttributes.addFlashAttribute("successMessage", "Connection added successfully !");
         }
 
         return "redirect:/home/transfer";

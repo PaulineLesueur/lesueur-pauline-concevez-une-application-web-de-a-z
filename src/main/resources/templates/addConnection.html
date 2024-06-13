@@ -33,6 +33,7 @@
     <main>
         <div class="container">
             <section id="add_connection">
+                <div th:if="${errorMessage}"><div class="error" th:text="${errorMessage}"></div></div>
                 <div class="head">
                     <h2>Add connection</h2>
                 </div>

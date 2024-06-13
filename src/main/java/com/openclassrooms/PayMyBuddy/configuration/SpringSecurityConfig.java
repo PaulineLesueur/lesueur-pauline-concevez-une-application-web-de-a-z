@@ -28,6 +28,7 @@ public class SpringSecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/style/**").permitAll();
+                    auth.requestMatchers("/createAccount").permitAll();
                     auth.requestMatchers("/home/transfer").hasRole("USER");
                     auth.anyRequest().authenticated();
                 })

@@ -32,6 +32,8 @@
     </section>
     <main>
         <div class="container">
+            <h3>Hello, <span th:text="${user.firstName}"></span> !</h3>
+            <div th:if="${successMessage}"><div class="success" th:text="${successMessage}"></div></div>
             <section id="send_money">
                 <div class="head">
                     <h2>Send Money</h2> <a class="button primary" th:href="@{transfer/addConnection}">Add Connection</a>

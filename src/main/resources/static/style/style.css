@@ -31,6 +31,10 @@ h2 {
     font-size: 17px;
 }
 
+h3 {
+    font-size: 28px;
+}
+
 a {
     text-decoration: none;
     color: #0275d8;
@@ -38,6 +42,22 @@ a {
 
 li {
     list-style-type: none;
+}
+
+.error {
+    padding: 5px;
+    background: #f8d7da;
+    border: 1px solid #dc3545;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.success {
+    padding: 5px;
+    background: #ddf3da;
+    border: 1px solid #47a51e;
+    border-radius: 4px;
+    text-align: center;
 }
 
 .font-awesome {

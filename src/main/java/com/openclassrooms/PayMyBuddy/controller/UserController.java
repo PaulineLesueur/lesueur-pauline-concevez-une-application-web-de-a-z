@@ -1,19 +1,54 @@
 package com.openclassrooms.PayMyBuddy.controller;
 
+import com.openclassrooms.PayMyBuddy.model.DBUser;
 import com.openclassrooms.PayMyBuddy.service.DBUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
 
     @Autowired
-    private DBUserService userService;
+    private DBUserService dbUserService;
 
     @GetMapping("/login")
     public String loginPage() {
         return "login";
+    }
+
+    @GetMapping("/createAccount")
+    public String createAccountPage() { return "createAccount"; }
+
+    @PostMapping("/createAccount")
+    public String signUp(Model model, @RequestParam String email, @RequestParam String password, @RequestParam String firstName, @RequestParam String lastName, RedirectAttributes redirectAttributes) {
+        DBUser newUser = new DBUser();
+        newUser.setUsername(email);
+
+        DBUser userToCheck = dbUserService.getUserByUsername(email);
+        if(userToCheck == null) {
+            newUser.setPassword(passwordEncoder().encode(password));
+            newUser.setFirstName(firstName);
+            newUser.setLastName(lastName);
+            newUser.setRole("USER");
+
+            dbUserService.saveUser(newUser);
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "The email provided is already associated with an account...");
+            return "redirect:/createAccount";
+        }
+
+        return "redirect:/home/transfer";
+    }
+
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
