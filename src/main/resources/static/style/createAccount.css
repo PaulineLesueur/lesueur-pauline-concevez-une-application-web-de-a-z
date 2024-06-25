@@ -7,10 +7,14 @@
     row-gap: 22px;
 }
 
+.error {
+    background: none;
+    border: none;
+}
+
 .error.form {
     position: absolute;
     display: block;
-    margin-top: 5px;
     font-size: 11px;
     color: #db7070;
 }

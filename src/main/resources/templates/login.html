@@ -13,7 +13,7 @@
     <div class="container-login">
         <h1>Pay My Buddy</h1>
 
-        <div th:if="${param.error}">Error</div>
+        <div th:if="${successSignUpMessage}"><div class="success" th:text="${successSignUpMessage}"></div></div>
 
         <form name="login" th:action="@{/login}" method="POST">
             <div class="input email">

@@ -24,25 +24,7 @@ public class ConnectionController {
     @GetMapping("/home/transfer")
     public String getConnectionList(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         String loggedInUsername = userDetails.getUsername();
-        DBUser currentUser = dbUserService.getUserByUsername(loggedInUsername);
-        Long userId = currentUser.getId();
-
-        List<DBUser> userConnections = currentUser.getConnections();
-        List<DBUser> connectionList = dbUserService.getConnectionsOfUserById(userId);
-
-        for(DBUser connection : connectionList) {
-            if(!userConnections.contains(connection)) {
-                userConnections.add(connection);
-            }
-        }
-
-        for(DBUser connection : userConnections) {
-            if(!userConnections.contains(connection)) {
-                userConnections.add(connection);
-            }
-        }
-
-        currentUser.setConnections(userConnections);
+        DBUser currentUser = dbUserService.getConnectionList(loggedInUsername);
 
         model.addAttribute("connections", currentUser.getConnections());
         model.addAttribute("user", currentUser);
@@ -55,21 +37,16 @@ public class ConnectionController {
     @PostMapping("/addConnection")
     public String addConnection(Model model, @AuthenticationPrincipal UserDetails userDetails, @RequestParam String email, RedirectAttributes redirectAttributes) {
         String loggedInUsername = userDetails.getUsername();
-        DBUser currentUser = dbUserService.getUserByUsername(loggedInUsername);
-        List<DBUser> userConnections = currentUser.getConnections();
+        String connectionAdded = dbUserService.addConnection(loggedInUsername, email);
 
-        DBUser connectionToAdd = dbUserService.getUserByUsername(email);
-        if(connectionToAdd == null) {
+        if("User not found".equals(connectionAdded)) {
             redirectAttributes.addFlashAttribute("errorMessage", "User not found");
             return "redirect:/home/transfer/addConnection";
-        } else if(userConnections.contains(connectionToAdd)) {
+        } else if("You're already connected with this user".equals(connectionAdded)) {
             redirectAttributes.addFlashAttribute("errorMessage", "You're already connected with this user");
             return "redirect:/home/transfer/addConnection";
 
-        } else if(!userConnections.contains(connectionToAdd)) {
-            userConnections.add(connectionToAdd);
-            currentUser.setConnections(userConnections);
-            dbUserService.saveUser(currentUser);
+        } else {
             redirectAttributes.addFlashAttribute("successMessage", "Connection added successfully !");
         }
 

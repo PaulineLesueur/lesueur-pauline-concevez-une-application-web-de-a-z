@@ -3,6 +3,7 @@ package com.openclassrooms.PayMyBuddy.service;
 import com.openclassrooms.PayMyBuddy.model.DBUser;
 import com.openclassrooms.PayMyBuddy.repository.DBUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,67 @@ public class DBUserService {
 
     public void saveUser(DBUser user) {
         dbUserRepository.save(user);
+    }
+
+    public String signUp(String email, String password, String firstName, String lastName) {
+        DBUser newUser = new DBUser();
+        newUser.setUsername(email);
+
+        DBUser userToCheck = getUserByUsername(email);
+        if(userToCheck == null) {
+            newUser.setPassword(passwordEncoder().encode(password));
+            newUser.setFirstName(firstName);
+            newUser.setLastName(lastName);
+            newUser.setRole("USER");
+
+            saveUser(newUser);
+
+            return "Account created successfully!";
+
+        } else {
+            return "The email provided is already associated with an account...";
+        }
+    }
+
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    public DBUser getConnectionList(String username) {
+        DBUser currentUser = getUserByUsername(username);
+        Long userId = currentUser.getId();
+
+        List<DBUser> userConnections = currentUser.getConnections();
+        List<DBUser> connectionList = getConnectionsOfUserById(userId);
+
+        for(DBUser connection : connectionList) {
+            if(!userConnections.contains(connection)) {
+                userConnections.add(connection);
+            }
+        }
+
+        currentUser.setConnections(userConnections);
+        saveUser(currentUser);
+
+        return currentUser;
+    }
+
+    public String addConnection(String username, String email) {
+        DBUser currentUser = getUserByUsername(username);
+        List<DBUser> userConnections = currentUser.getConnections();
+
+        DBUser connectionToAdd = getUserByUsername(email);
+        if(connectionToAdd == null) {
+            return "User not found";
+        } else if(userConnections.contains(connectionToAdd)) {
+            return "You're already connected with this user";
+
+        } else {
+            userConnections.add(connectionToAdd);
+            currentUser.setConnections(userConnections);
+            saveUser(currentUser);
+            return "Connection added successfully !";
+        }
     }
 
 }

@@ -28,27 +28,18 @@ public class UserController {
 
     @PostMapping("/createAccount")
     public String signUp(Model model, @RequestParam String email, @RequestParam String password, @RequestParam String firstName, @RequestParam String lastName, RedirectAttributes redirectAttributes) {
-        DBUser newUser = new DBUser();
-        newUser.setUsername(email);
+        String createdUser = dbUserService.signUp(email, password, firstName, lastName);
 
-        DBUser userToCheck = dbUserService.getUserByUsername(email);
-        if(userToCheck == null) {
-            newUser.setPassword(passwordEncoder().encode(password));
-            newUser.setFirstName(firstName);
-            newUser.setLastName(lastName);
-            newUser.setRole("USER");
+        if("Account created successfully!".equals(createdUser)) {
+            redirectAttributes.addFlashAttribute("successSignUpMessage", "Congratulations! Your account is now set up. Please log in to continue !");
+            return "redirect:/home/transfer";
 
-            dbUserService.saveUser(newUser);
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "The email provided is already associated with an account...");
             return "redirect:/createAccount";
         }
-
-        return "redirect:/home/transfer";
     }
 
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
 }
