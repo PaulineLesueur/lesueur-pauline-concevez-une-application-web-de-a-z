@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Pay My Buddy - Add new connection</title>
+    <title>Pay My Buddy - Money</title>
     <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/style/style.css}" />
@@ -15,7 +15,7 @@
             <nav>
                 <li><a th:href="@{/home/transfer}">Home</a></li>
                 <li><a th:href="@{/home/transfer}">Transfer</a></li>
-                <li><a th:href="@{/home/money}">Money</a></li>
+                <li><a class="active" th:href="@{/home/money}">Money</a></li>
                 <li>Profile</li>
                 <li>Contact</li>
                 <li>
@@ -28,7 +28,7 @@
     </header>
     <section id="path">
         <div class="container">
-            <a th:href="@{/home/transfer}">Home</a> <a th:href="@{/home/transfer}">Transfer</a> Add Connection
+            <a th:href="@{transfer}">Home</a> Money
         </div>
     </section>
     <main>
@@ -37,16 +37,25 @@
                 <h3>Hello, <span th:text="${user.firstName}"></span> !</h3>
                 <h4>Your balance : <span th:text="${balance}"></span> €</h4>
             </div>
-
-            <section id="add_connection">
-                <div th:if="${errorMessage}"><div class="error" th:text="${errorMessage}"></div></div>
+            <section id="deposit">
                 <div class="head">
-                    <h2>Add connection</h2>
+                    <h2>Deposit</h2>
                 </div>
                 <div class="body">
-                    <form name="add_connection" th:action="@{/addConnection}" method="POST">
-                        <input name="email" class="email" type="email" placeholder="name@email.com" required />
-                        <input class="button" type="submit" value="Add Connection" />
+                    <form name="deposit">
+                        <input name="amount" class="amount" type="number" placeholder="0€" required />
+                        <input class="button" type="submit" value="Make a deposit" />
+                    </form>
+                </div>
+            </section>
+            <section id="withdrawal">
+                <div class="head">
+                    <h2>Withdrawal</h2>
+                </div>
+                <div class="body">
+                    <form name="deposit">
+                        <input name="amount" class="amount" type="number" placeholder="0€" required />
+                        <input class="button" type="submit" value="Send money to my bank account" />
                     </form>
                 </div>
             </section>

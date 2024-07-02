@@ -12,10 +12,14 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(name = "user_id")
-    private int userId;
+    @OneToOne
+    @JoinColumn (
+            name = "user_id",
+            referencedColumnName = "id"
+    )
+    private DBUser dBUser;
 
     private double balance;
 

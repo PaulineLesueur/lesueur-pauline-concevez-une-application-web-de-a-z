@@ -30,6 +30,7 @@ public class SpringSecurityConfig {
                     auth.requestMatchers("/style/**").permitAll();
                     auth.requestMatchers("/createAccount").permitAll();
                     auth.requestMatchers("/home/transfer").hasRole("USER");
+                    auth.requestMatchers("/home/money").hasRole("USER");
                     auth.anyRequest().authenticated();
                 })
                 .formLogin(httpSecurityFormLoginConfigurer -> {

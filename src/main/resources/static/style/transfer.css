@@ -1,8 +1,4 @@
-nav a {
-    color: #0275d8;
-}
-
-#send_money .body, #add_connection .body {
+#send_money .body, #add_connection .body, #deposit .body, #withdrawal .body {
     display: flex;
     gap: 25px;
     justify-content: center;
@@ -11,7 +7,7 @@ nav a {
     background: #f5f5f5;
 }
 
-#add_connection .body form {
+#add_connection .body form, #deposit .body form, #withdrawal .body form {
     display: flex;
     gap: 25px;
     justify-content: center;
@@ -22,14 +18,14 @@ nav a {
     display: none;
 }
 
-#send_money .body input, #send_money .body select, #add_connection .body input {
+#send_money .body input, #send_money .body select, #add_connection .body input, #deposit .body input, #withdrawal .body input {
     height: 30px;
     border: 1px solid #afafaf;
     font-family: 'Inter';
     font-size: 12px;
 }
 
-#send_money .body input.description, #add_connection .body input.email {
+#send_money .body input.description, #add_connection .body input.email, #deposit .body input.amount, #withdrawal .body input.amount {
     width: 300px;
     padding-left: 4px;
 }
@@ -93,4 +89,8 @@ nav a {
 
 #my_transactions .pagination li:last-child {
     border-radius: 0 3px 3px 0;
+}
+
+#withdrawal input.button {
+    width: 230px;
 }

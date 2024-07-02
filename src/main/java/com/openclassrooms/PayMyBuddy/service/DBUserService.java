@@ -26,7 +26,7 @@ public class DBUserService {
         return dbUserRepository.save(user);
     }
 
-    public String signUp(String email, String password, String firstName, String lastName) {
+    public DBUser signUp(String email, String password, String firstName, String lastName) {
         DBUser newUser = new DBUser();
         newUser.setUsername(email);
 
@@ -39,10 +39,10 @@ public class DBUserService {
 
             saveUser(newUser);
 
-            return "Account created successfully!";
+            return newUser;
 
         } else {
-            return "The email provided is already associated with an account...";
+            return null;
         }
     }
 

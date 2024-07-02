@@ -1,5 +1,6 @@
 package com.openclassrooms.PayMyBuddy.controller;
 
+import com.openclassrooms.PayMyBuddy.model.Account;
 import com.openclassrooms.PayMyBuddy.model.DBUser;
 import com.openclassrooms.PayMyBuddy.service.DBUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +26,25 @@ public class ConnectionController {
     public String getConnectionList(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         String loggedInUsername = userDetails.getUsername();
         DBUser currentUser = dbUserService.getConnectionList(loggedInUsername);
+        Account userAccount = currentUser.getAccount();
 
+        model.addAttribute("balance", userAccount.getBalance());
         model.addAttribute("connections", currentUser.getConnections());
         model.addAttribute("user", currentUser);
         return "transfer";
     }
 
     @GetMapping("/home/transfer/addConnection")
-    public String addConnectionPage() { return "addConnection"; }
+    public String addConnectionPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        String loggedInUsername = userDetails.getUsername();
+        DBUser currentUser = dbUserService.getConnectionList(loggedInUsername);
+        Account userAccount = currentUser.getAccount();
+
+        model.addAttribute("balance", userAccount.getBalance());
+        model.addAttribute("user", currentUser);
+
+        return "addConnection";
+    }
 
     @PostMapping("/addConnection")
     public String addConnection(Model model, @AuthenticationPrincipal UserDetails userDetails, @RequestParam String email, RedirectAttributes redirectAttributes) {

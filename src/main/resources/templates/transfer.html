@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Pay My Buddy - Home</title>
+    <title>Pay My Buddy - Transfer</title>
     <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/style/style.css}" />
@@ -13,8 +13,9 @@
         <div class="container">
             <a th:href="@{/home/transfer}"><h1>Pay My Buddy</h1></a>
             <nav>
-                <li>Home</li>
-                <li><a th:href="@{/home/transfer}">Transfer</a></li>
+                <li><a th:href="@{/home/transfer}">Home</a></li>
+                <li><a class="active" th:href="@{/home/transfer}">Transfer</a></li>
+                <li><a th:href="@{/home/money}">Money</a></li>
                 <li>Profile</li>
                 <li>Contact</li>
                 <li>
@@ -32,7 +33,11 @@
     </section>
     <main>
         <div class="container">
-            <h3>Hello, <span th:text="${user.firstName}"></span> !</h3>
+            <div class="head">
+                <h3>Hello, <span th:text="${user.firstName}"></span> !</h3>
+                <h4>Your balance : <span th:text="${balance}"></span> €</h4>
+            </div>
+
             <div th:if="${successMessage}"><div class="success" th:text="${successMessage}"></div></div>
             <section id="send_money">
                 <div class="head">

@@ -40,4 +40,11 @@ public class DBUser {
             inverseJoinColumns = @JoinColumn(name = "connection_id")
     )
     private List<DBUser> connections = new ArrayList<>();
+
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            mappedBy = "dBUser"
+    )
+    private Account account;
+
 }
