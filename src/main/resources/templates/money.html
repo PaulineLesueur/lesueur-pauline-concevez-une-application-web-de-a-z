@@ -37,24 +37,28 @@
                 <h3>Hello, <span th:text="${user.firstName}"></span> !</h3>
                 <h4>Your balance : <span th:text="${balance}"></span> €</h4>
             </div>
+            <div th:if="${successMessage}"><div class="success" th:text="${successMessage}"></div></div>
+            <div th:if="${errorMessage}"><div class="error" th:text="${errorMessage}"></div></div>
             <section id="deposit">
                 <div class="head">
                     <h2>Deposit</h2>
                 </div>
                 <div class="body">
-                    <form name="deposit">
-                        <input name="amount" class="amount" type="number" placeholder="0€" required />
+                    <form name="deposit" th:action="@{/deposit}" method="POST">
+                        <label for="amount"></label>
+                        <input id="amount" name="amount" class="amount" type="number" step="0.01" placeholder="0€" required />
                         <input class="button" type="submit" value="Make a deposit" />
                     </form>
                 </div>
             </section>
+
             <section id="withdrawal">
                 <div class="head">
                     <h2>Withdrawal</h2>
                 </div>
                 <div class="body">
-                    <form name="deposit">
-                        <input name="amount" class="amount" type="number" placeholder="0€" required />
+                    <form name="withdrawal" th:action="@{/withdrawal}" method="POST">
+                        <input name="amount" class="amount" type="number" step="0.01"placeholder="0€" required />
                         <input class="button" type="submit" value="Send money to my bank account" />
                     </form>
                 </div>

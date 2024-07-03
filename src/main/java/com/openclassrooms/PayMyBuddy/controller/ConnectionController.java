@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class ConnectionController {
         DBUser currentUser = dbUserService.getConnectionList(loggedInUsername);
         Account userAccount = currentUser.getAccount();
 
-        model.addAttribute("balance", userAccount.getBalance());
+        model.addAttribute("balance", new DecimalFormat("##.##").format(userAccount.getBalance()));
         model.addAttribute("connections", currentUser.getConnections());
         model.addAttribute("user", currentUser);
         return "transfer";
@@ -40,7 +41,7 @@ public class ConnectionController {
         DBUser currentUser = dbUserService.getConnectionList(loggedInUsername);
         Account userAccount = currentUser.getAccount();
 
-        model.addAttribute("balance", userAccount.getBalance());
+        model.addAttribute("balance", new DecimalFormat("##.##").format(userAccount.getBalance()));
         model.addAttribute("user", currentUser);
 
         return "addConnection";
