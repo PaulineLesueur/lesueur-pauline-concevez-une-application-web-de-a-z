@@ -5,6 +5,7 @@ import com.openclassrooms.PayMyBuddy.model.DBUser;
 import com.openclassrooms.PayMyBuddy.model.Money;
 import com.openclassrooms.PayMyBuddy.service.AccountService;
 import com.openclassrooms.PayMyBuddy.service.DBUserService;
+import com.openclassrooms.PayMyBuddy.service.MoneyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,22 +19,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MoneyController {
 
     @Autowired
-    private DBUserService dbUserService;
-
-    @Autowired
-    private AccountService accountService;
+    private MoneyService moneyService;
 
     @PostMapping("/deposit")
     public String deposit(Model model, @RequestParam Double amount, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes) {
         String loggedInUsername = userDetails.getUsername();
-        DBUser currentUser = dbUserService.getUserByUsername(loggedInUsername);
-        Account userAccount = currentUser.getAccount();
-        Money deposit = new Money();
 
-        deposit.setAmount(amount);
-        Double newBalance = userAccount.getBalance() + deposit.getAmount();
-        userAccount.setBalance(newBalance);
-        accountService.saveAccount(userAccount);
+        moneyService.deposit(loggedInUsername, amount);
 
         redirectAttributes.addFlashAttribute("successMessage", "Deposit performed successfully !");
         return "redirect:/home/money";
@@ -42,17 +34,9 @@ public class MoneyController {
     @PostMapping("/withdrawal")
     public String withdrawal(Model model, @RequestParam Double amount, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes) {
         String loggedInUsername = userDetails.getUsername();
-        DBUser currentUser = dbUserService.getUserByUsername(loggedInUsername);
-        Account userAccount = currentUser.getAccount();
-        Money withdrawal = new Money();
+        boolean success = moneyService.withdrawal(loggedInUsername, amount);
 
-        withdrawal.setAmount(amount);
-
-        if (userAccount.getBalance() >= amount) {
-            Double newBalance = userAccount.getBalance() - withdrawal.getAmount();
-            userAccount.setBalance(newBalance);
-            accountService.saveAccount(userAccount);
-
+        if (success) {
             redirectAttributes.addFlashAttribute("successMessage", "Withdrawal performed successfully !");
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Payment failed : Insufficient account balance.");
