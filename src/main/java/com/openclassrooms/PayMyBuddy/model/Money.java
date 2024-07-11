@@ -18,6 +18,6 @@ public class Money {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double amount;
+    private double amount;
 
 }

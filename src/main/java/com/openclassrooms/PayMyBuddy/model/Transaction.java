@@ -12,13 +12,13 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "giver_account")
-    private int giverAccount;
+    private Account giverAccount;
 
     @Column(name = "receiver_account")
-    private int receiverAccount;
+    private Account receiverAccount;
 
     private String description;
 

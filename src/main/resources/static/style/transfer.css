@@ -1,4 +1,4 @@
-#send_money .body, #add_connection .body, #deposit .body, #withdrawal .body {
+#send_money .body form, #add_connection .body, #deposit .body, #withdrawal .body {
     display: flex;
     gap: 25px;
     justify-content: center;

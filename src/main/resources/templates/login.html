@@ -18,11 +18,11 @@
         <form name="login" th:action="@{/login}" method="POST">
             <div class="input email">
                 <label for="email"></label>
-                <input name="username" type="text" id="email" placeholder="Email" />
+                <input name="username" type="text" id="email" placeholder="Email" required />
             </div>
             <div class="input password">
                 <label for="password"></label>
-                <input name="password" type="password" id="password" placeholder="Password" />
+                <input name="password" type="password" id="password" placeholder="Password" required />
             </div>
             <div class="gensmall remember"><input type="checkbox"> Remember me</div>
 

@@ -44,20 +44,22 @@
                     <h2>Send Money</h2> <a class="button primary" th:href="@{transfer/addConnection}">Add Connection</a>
                 </div>
                 <div class="body">
-                    <label for="select_a_connection"></label>
-                    <select name="connections" id="select_a_connection">
-                        <option selected>Select a Connection</option>
-                        <option th:each="user : ${connections}"
-                                th:value="${user.getId}"
-                                th:text="${user.username}"></option>
-                    </select>
+                    <form name="transfer" th:action="@{/transfer}" method="POST">
+                        <label for="select_a_connection"></label>
+                        <select name="receiver" id="select_a_connection">
+                            <option selected>Select a Connection</option>
+                            <option th:each="user : ${connections}"
+                                    th:value="${user.getId}"
+                                    th:text="${user.username}"></option>
+                        </select>
 
-                    <label for="description"></label>
-                    <input class="description" type="text" name="description" id="description" placeholder="Description..." />
+                        <label for="description"></label>
+                        <input class="description" type="text" name="description" id="description" placeholder="Description..." />
 
-                    <label for="amount"></label>
-                    <input type="number" min="0" placeholder="0€ " name="amount" id="amount" />
-                    <input type="button" class="button" value="Pay" />
+                        <label for="amount"></label>
+                        <input type="number" min="0" placeholder="0€ " name="amount" id="amount" />
+                        <input type="submit" class="button" value="Pay" />
+                    </form>
                 </div>
             </section>
             <section id="my_transactions">

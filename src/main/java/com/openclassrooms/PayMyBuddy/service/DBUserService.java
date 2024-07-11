@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DBUserService {
@@ -17,6 +18,8 @@ public class DBUserService {
     public DBUser getUserByUsername(String username) {
         return dbUserRepository.findByUsername(username);
     }
+
+    public Optional<DBUser> getUserById(Long id) { return dbUserRepository.findById(id); }
 
     public List<DBUser> getConnectionsOfUserById(Long userId) {
         return dbUserRepository.findConnectionsByUserId(userId);
