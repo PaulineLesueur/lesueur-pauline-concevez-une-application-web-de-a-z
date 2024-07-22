@@ -15,10 +15,10 @@ public class Transaction {
     private Long id;
 
     @Column(name = "giver_account")
-    private Account giverAccount;
+    private Long giverAccount;
 
     @Column(name = "receiver_account")
-    private Account receiverAccount;
+    private String receiverAccount;
 
     private String description;
 

@@ -2,7 +2,9 @@ package com.openclassrooms.PayMyBuddy.controller;
 
 import com.openclassrooms.PayMyBuddy.model.Account;
 import com.openclassrooms.PayMyBuddy.model.DBUser;
+import com.openclassrooms.PayMyBuddy.model.Transaction;
 import com.openclassrooms.PayMyBuddy.service.DBUserService;
+import com.openclassrooms.PayMyBuddy.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,12 +25,18 @@ public class ConnectionController {
     @Autowired
     private DBUserService dbUserService;
 
-    @GetMapping("/home/transfer")
-    public String getConnectionList(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        String loggedInUsername = userDetails.getUsername();
-        DBUser currentUser = dbUserService.getConnectionList(loggedInUsername);
-        Account userAccount = currentUser.getAccount();
+    @Autowired
+    private TransactionService transactionService;
 
+    @GetMapping("/home/transfer")
+    public String getConnectionsAndTransactions(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        String loggedInUsername = userDetails.getUsername();
+        DBUser currentUser = dbUserService.getUserInformations(loggedInUsername);
+
+        Account userAccount = currentUser.getAccount();
+        List<Transaction> transactionList = userAccount.getTransactions();
+
+        model.addAttribute("transactions", transactionList);
         model.addAttribute("balance", new DecimalFormat("##.##").format(userAccount.getBalance()));
         model.addAttribute("connections", currentUser.getConnections());
         model.addAttribute("user", currentUser);
@@ -38,7 +46,7 @@ public class ConnectionController {
     @GetMapping("/home/transfer/addConnection")
     public String addConnectionPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         String loggedInUsername = userDetails.getUsername();
-        DBUser currentUser = dbUserService.getConnectionList(loggedInUsername);
+        DBUser currentUser = dbUserService.getUserInformations(loggedInUsername);
         Account userAccount = currentUser.getAccount();
 
         model.addAttribute("balance", new DecimalFormat("##.##").format(userAccount.getBalance()));
@@ -50,17 +58,15 @@ public class ConnectionController {
     @PostMapping("/addConnection")
     public String addConnection(Model model, @AuthenticationPrincipal UserDetails userDetails, @RequestParam String email, RedirectAttributes redirectAttributes) {
         String loggedInUsername = userDetails.getUsername();
-        String connectionAdded = dbUserService.addConnection(loggedInUsername, email);
+        /*String connectionAdded = dbUserService.addConnection(loggedInUsername, email);*/
 
-        if("User not found".equals(connectionAdded)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "User not found");
-            return "redirect:/home/transfer/addConnection";
-        } else if("You're already connected with this user".equals(connectionAdded)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "You're already connected with this user");
-            return "redirect:/home/transfer/addConnection";
+        boolean success = dbUserService.addConnection(loggedInUsername, email);
 
-        } else {
+        if(success) {
             redirectAttributes.addFlashAttribute("successMessage", "Connection added successfully !");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "User not found or already connected");
+            return "redirect:/home/transfer/addConnection";
         }
 
         return "redirect:/home/transfer";

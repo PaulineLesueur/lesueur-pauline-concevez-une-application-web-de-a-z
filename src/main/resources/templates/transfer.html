@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/style/style.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/transfer.css}" />
+    <script th:src="@{/js/pagination.js}"></script>
 </head>
 <body>
     <header>
@@ -47,18 +48,18 @@
                 <div class="body">
                     <form name="transfer" th:action="@{/transfer}" method="POST">
                         <label for="select_a_connection"></label>
-                        <select name="receiver" id="select_a_connection">
-                            <option selected>Select a Connection</option>
+                        <select name="receiver" id="select_a_connection" required>
+                            <option value="" selected>Select a Connection</option>
                             <option th:each="user : ${connections}"
                                     th:value="${user.getId}"
                                     th:text="${user.username}"></option>
                         </select>
 
                         <label for="description"></label>
-                        <input class="description" type="text" name="description" id="description" placeholder="Description..." />
+                        <input class="description" type="text" name="description" id="description" placeholder="Description..." required />
 
                         <label for="amount"></label>
-                        <input type="number" min="0" placeholder="0€ " name="amount" id="amount" />
+                        <input type="number" min="0" placeholder="0€ " name="amount" id="amount" required />
                         <input type="submit" class="button" value="Pay" />
                     </form>
                 </div>
@@ -68,36 +69,21 @@
                     <h2>My Transactions</h2>
                 </div>
                 <div class="body">
-                    <li>
-                        <span>Connections</span>
-                        <span>Description</span>
-                        <span>Amount</span>
-                    </li>
-                    <li>
-                        <span>Hayley</span>
-                        <span>Restaurant bill share</span>
-                        <span>10€</span>
-                    </li>
-                    <li>
-                        <span>Clara</span>
-                        <span>Trip money</span>
-                        <span>25€</span>
-                    </li>
-                    <li>
-                        <span>Smith</span>
-                        <span>Movie tickets</span>
-                        <span>8€</span>
-                    </li>
+                    <ul id="transactionList">
+                        <li>
+                            <span>Connections</span>
+                            <span>Description</span>
+                            <span>Amount</span>
+                        </li>
+                        <li th:each="i : ${#numbers.sequence(transactions.size() - 1, 0, -1)}" th:with="transaction=${transactions[i]}">
+                            <span th:text="${transaction.receiverAccount}"></span>
+                            <span th:text="${transaction.description}"></span>
+                            <span th:text="${transaction.amount} + ' €'"> </span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="pagination">
-                    <li>«</li>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>»</li>
-                </div>
+                <div class="pagination" id="pagination"></div>
+
             </section>
         </div>
     </main>

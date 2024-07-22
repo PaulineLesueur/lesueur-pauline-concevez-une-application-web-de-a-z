@@ -1,7 +1,9 @@
 package com.openclassrooms.PayMyBuddy.service;
 
 import com.openclassrooms.PayMyBuddy.model.DBUser;
+import com.openclassrooms.PayMyBuddy.model.Transaction;
 import com.openclassrooms.PayMyBuddy.repository.DBUserRepository;
+import com.openclassrooms.PayMyBuddy.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,7 +55,7 @@ public class DBUserService {
         return new BCryptPasswordEncoder();
     }
 
-    public DBUser getConnectionList(String username) {
+    public DBUser getUserInformations(String username) {
         DBUser currentUser = getUserByUsername(username);
         Long userId = currentUser.getId();
 
@@ -72,21 +74,21 @@ public class DBUserService {
         return currentUser;
     }
 
-    public String addConnection(String username, String email) {
+    public boolean addConnection(String username, String email) {
         DBUser currentUser = getUserByUsername(username);
         List<DBUser> userConnections = currentUser.getConnections();
-
         DBUser connectionToAdd = getUserByUsername(email);
+
         if(connectionToAdd == null) {
-            return "User not found";
+            return false;
         } else if(userConnections.contains(connectionToAdd)) {
-            return "You're already connected with this user";
+            return false;
 
         } else {
             userConnections.add(connectionToAdd);
             currentUser.setConnections(userConnections);
             saveUser(currentUser);
-            return "Connection added successfully !";
+            return true;
         }
     }
 

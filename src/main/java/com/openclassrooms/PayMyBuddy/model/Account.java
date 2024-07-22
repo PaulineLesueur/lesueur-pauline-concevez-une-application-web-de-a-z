@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,5 +26,11 @@ public class Account implements Serializable {
     private DBUser dBUser;
 
     private double balance;
+
+    @OneToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "giver_account")
+    private List<Transaction> transactions = new ArrayList<>();
 
 }
