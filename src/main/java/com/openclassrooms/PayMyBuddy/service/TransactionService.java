@@ -4,6 +4,7 @@ import com.openclassrooms.PayMyBuddy.constants.Fee;
 import com.openclassrooms.PayMyBuddy.model.Account;
 import com.openclassrooms.PayMyBuddy.model.DBUser;
 import com.openclassrooms.PayMyBuddy.model.Transaction;
+import com.openclassrooms.PayMyBuddy.repository.AccountRepository;
 import com.openclassrooms.PayMyBuddy.repository.DBUserRepository;
 import com.openclassrooms.PayMyBuddy.repository.TransactionRepository;
 import org.springframework.data.domain.Page;
@@ -44,10 +45,8 @@ public class TransactionService {
         Account receiverAccount = receiverUser.get().getAccount();
         Transaction transaction = new Transaction();
 
-        Optional<DBUser> receiverEmail = dbUserRepository.findById(receiverAccount.getId());
-
         transaction.setGiverAccount(giverAccount.getId());
-        transaction.setReceiverAccount(receiverEmail.get().getFirstName());
+        transaction.setReceiverAccount(receiverUser.get().getFirstName());
         transaction.setDescription(description);
         transaction.setAmount(amount);
         transaction.setFee(Fee.TRANSACTION_FEE);

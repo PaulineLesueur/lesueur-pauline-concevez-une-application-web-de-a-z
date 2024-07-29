@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -58,7 +57,6 @@ public class ConnectionController {
     @PostMapping("/addConnection")
     public String addConnection(Model model, @AuthenticationPrincipal UserDetails userDetails, @RequestParam String email, RedirectAttributes redirectAttributes) {
         String loggedInUsername = userDetails.getUsername();
-        /*String connectionAdded = dbUserService.addConnection(loggedInUsername, email);*/
 
         boolean success = dbUserService.addConnection(loggedInUsername, email);
 
