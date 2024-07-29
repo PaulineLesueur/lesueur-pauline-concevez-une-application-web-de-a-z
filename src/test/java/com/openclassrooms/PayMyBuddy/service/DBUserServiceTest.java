@@ -24,8 +24,8 @@ public class DBUserServiceTest {
     public static List<DBUser> connectionList = new ArrayList<>();
 
     static {
-        connectionList.add(new DBUser(2L, "test2@email.com", "password", "firstname2", "lastname2", "USER", null));
-        connectionList.add(new DBUser(3L, "test3@email.com", "password", "firstname3", "lastname3", "USER", null));
+        connectionList.add(new DBUser(2L, "test2@email.com", "password", "firstname2", "lastname2", "USER", null, null));
+        connectionList.add(new DBUser(3L, "test3@email.com", "password", "firstname3", "lastname3", "USER", null, null));
     }
 
     @Test
