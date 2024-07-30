@@ -1,10 +1,5 @@
 package com.openclassrooms.PayMyBuddy.controller;
 
-import com.openclassrooms.PayMyBuddy.model.Account;
-import com.openclassrooms.PayMyBuddy.model.DBUser;
-import com.openclassrooms.PayMyBuddy.model.Money;
-import com.openclassrooms.PayMyBuddy.service.AccountService;
-import com.openclassrooms.PayMyBuddy.service.DBUserService;
 import com.openclassrooms.PayMyBuddy.service.MoneyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
