@@ -27,8 +27,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String loginPage() {
-        return "login";
-    }
+        return "login"; }
 
     @GetMapping("/createAccount")
     public String createAccountPage() { return "createAccount"; }
