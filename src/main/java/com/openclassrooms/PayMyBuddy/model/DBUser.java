@@ -48,4 +48,6 @@ public class DBUser implements Serializable {
     )
     private Account account;
 
+    public DBUser(long l, String mail, String password, String john, String doe) {
+    }
 }
