@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -21,9 +21,6 @@ public class DBUserServiceTest {
 
     @MockBean
     private DBUserRepository dbUserRepository;
-
-    @MockBean
-    private BCryptPasswordEncoder passwordEncoder;
 
     public static List<DBUser> connectionList = new ArrayList<>();
 
@@ -39,6 +36,15 @@ public class DBUserServiceTest {
         when(dbUserRepository.findByUsername(any(String.class))).thenReturn(user);
         DBUser userFound = dbUserService.getUserByUsername("test@email.com");
         assertEquals(userFound.getUsername(), user.getUsername());
+    }
+
+    @Test
+    public void testGetUserById() {
+        DBUser user = new DBUser();
+        user.setUsername("test@email.com");
+        when(dbUserRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
+        Optional<DBUser> userFound = dbUserService.getUserById(1L);
+        assertEquals(userFound.get().getUsername(), user.getUsername());
     }
 
     @Test
@@ -140,6 +146,29 @@ public class DBUserServiceTest {
         assertEquals(currentUser.getId(), result.getId());
         assertEquals(currentUser.getUsername(), result.getUsername());
         assertTrue(result.getConnections().contains(newConnection));
+    }
+
+    @Test
+    public void testAddConnectionSuccess() {
+        String username = "test@email.com";
+
+        DBUser currentUser = new DBUser();
+        currentUser.setUsername(username);
+        List<DBUser> userConnections = new ArrayList<>();
+        currentUser.setConnections(userConnections);
+
+        DBUser connectionToAdd = new DBUser();
+        connectionToAdd.setUsername(username);
+
+        when(dbUserRepository.findByUsername("user")).thenReturn(currentUser);
+        when(dbUserRepository.findByUsername(username)).thenReturn(connectionToAdd);
+        when(dbUserRepository.save(any(DBUser.class))).thenReturn(currentUser);
+
+        boolean result = dbUserService.addConnection("user", username);
+
+        assertTrue(result);
+        assertTrue(currentUser.getConnections().contains(connectionToAdd));
+        verify(dbUserRepository).save(currentUser);
     }
 
     @Test
