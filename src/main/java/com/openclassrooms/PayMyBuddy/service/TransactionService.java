@@ -4,16 +4,11 @@ import com.openclassrooms.PayMyBuddy.constants.Fee;
 import com.openclassrooms.PayMyBuddy.model.Account;
 import com.openclassrooms.PayMyBuddy.model.DBUser;
 import com.openclassrooms.PayMyBuddy.model.Transaction;
-import com.openclassrooms.PayMyBuddy.repository.AccountRepository;
 import com.openclassrooms.PayMyBuddy.repository.DBUserRepository;
 import com.openclassrooms.PayMyBuddy.repository.TransactionRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +16,6 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
-
     @Autowired
     private AccountService accountService;
 

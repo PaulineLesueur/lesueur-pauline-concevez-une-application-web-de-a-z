@@ -1,9 +1,7 @@
 package com.openclassrooms.PayMyBuddy.service;
 
 import com.openclassrooms.PayMyBuddy.model.DBUser;
-import com.openclassrooms.PayMyBuddy.model.Transaction;
 import com.openclassrooms.PayMyBuddy.repository.DBUserRepository;
-import com.openclassrooms.PayMyBuddy.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
