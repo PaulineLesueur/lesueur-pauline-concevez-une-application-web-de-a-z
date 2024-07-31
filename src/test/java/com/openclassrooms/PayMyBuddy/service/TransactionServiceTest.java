@@ -36,12 +36,7 @@ public class TransactionServiceTest {
 
     @Test
     public void testSaveTransaction() {
-        Transaction transactionToSave = new Transaction();
-        transactionToSave.setGiverAccount(1L);
-        transactionToSave.setReceiverAccount("receiver@email.com");
-        transactionToSave.setDescription("description");
-        transactionToSave.setAmount(10D);
-        transactionToSave.setFee(Fee.TRANSACTION_FEE);
+        Transaction transactionToSave = new Transaction(1L, 1L, "receiver@email.com", "description", 10D, Fee.TRANSACTION_FEE);
 
         when(transactionRepository.save(any(Transaction.class))).thenReturn(transactionToSave);
         Transaction savedTransaction = transactionService.saveTransaction(transactionToSave);
