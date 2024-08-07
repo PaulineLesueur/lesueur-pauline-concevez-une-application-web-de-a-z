@@ -6,6 +6,7 @@ import com.openclassrooms.PayMyBuddy.model.DBUser;
 import com.openclassrooms.PayMyBuddy.model.Transaction;
 import com.openclassrooms.PayMyBuddy.repository.DBUserRepository;
 import com.openclassrooms.PayMyBuddy.repository.TransactionRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class TransactionService {
 
     public Transaction saveTransaction(Transaction transaction) { return transactionRepository.save(transaction); }
 
+    @Transactional
     public boolean transfer(String giverUsername, Long receiverId, String description, Double amount) {
         DBUser currentUser = dbUserService.getUserByUsername(giverUsername);
         Optional<DBUser> receiverUser = dbUserService.getUserById(receiverId);
@@ -37,6 +39,13 @@ public class TransactionService {
 
         Account giverAccount = currentUser.getAccount();
         Account receiverAccount = receiverUser.get().getAccount();
+
+        Double totalAmountWithFee = amount + (amount * Fee.TRANSACTION_FEE);
+
+        if(giverAccount.getBalance() < totalAmountWithFee) {
+            return false; //insufficient funds
+        }
+
         Transaction transaction = new Transaction();
 
         transaction.setGiverAccount(giverAccount.getId());
@@ -45,12 +54,6 @@ public class TransactionService {
         transaction.setAmount(amount);
         transaction.setFee(Fee.TRANSACTION_FEE);
         saveTransaction(transaction);
-
-        Double totalAmountWithFee = amount + (amount * Fee.TRANSACTION_FEE);
-
-        if(giverAccount.getBalance() < totalAmountWithFee) {
-            return false; //insufficient funds
-        }
 
         Double newGiverBalance = giverAccount.getBalance() - totalAmountWithFee;
         Double newReceiverBalance = receiverAccount.getBalance() + amount;
